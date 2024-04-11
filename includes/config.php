@@ -1,8 +1,10 @@
 <?php
 
-    $db_user = 'root';
-    $db_password = '';
-    $db_name = 'restAPItemplate';
+    $env = parse_ini_file('../.env');
+
+    $db_user = $env["DB_USER"];
+    $db_password = $env["DB_PASSWORD"];
+    $db_name = $env["DB_NAME"];
 
     $db = new PDO ('mysql:host=127.0.0.1;dbname='.$db_name.';charset=utf8',$db_user,$db_password);
 
