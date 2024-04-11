@@ -1,0 +1,63 @@
+services:
+  db:
+    container_name: db
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+    ports:
+      - 9906:3606
+    volumes:
+      - db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: $DB_HOST
+      WORDPRESS_DB_USER: $DB_USER
+      WORDPRESS_DB_PASSWORD: $DB_PASSWORD
+      WORDPRESS_DB_NAME: $DB_NAME
+    volumes:
+      - ./myapp:/var/www/html:rw
+    depends_on: 
+      - db
+
+  api:
+    container_name: "api"
+    ports:
+      - "8082:80"
+    build:
+      dockerfile: Dockerfile
+      args:
+        - DB_USER=$DB_USER
+        - DB_PASSWORD=$DB_PASSWORD
+        - DB_NAME=$DB_NAME
+        - DB_HOST=$DB_HOST
+    healthcheck:
+      test: curl -fSs http://127.0.0.1:80 || exit 1
+      start_period: 180s
+      timeout: 10s
+      interval: 10s
+      retries: 3
+    restart: unless-stopped
+
+  phpmyadmin: 
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+    restart: always
+    ports: 
+      - '8081:80'
+    depends_on:
+      - db
+
+
+volumes:
+  wordpress:
+  db:
