@@ -4,9 +4,4 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^api/posts/list$ api/posts/read.php [L]
-RewriteRule ^api/posts/info$ api/posts/read_single.php [L]
-
-RewriteRule ^api/posts$ api/posts/create.php [L]
-RewriteRule ^api/posts$ api/posts/update.php [L]
-RewriteRule ^api/posts$ api/posts/delete.php [L]
+RewriteRule ^api/posts$ api/posts/router.php [L]
