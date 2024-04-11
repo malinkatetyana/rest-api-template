@@ -1,2 +1,4 @@
 includes/config.php
 .vscode/
+.env
+myapp
