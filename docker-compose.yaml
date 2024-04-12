@@ -34,18 +34,15 @@ services:
       - "8082:80"
     build:
       dockerfile: Dockerfile
-      args:
-        - DB_USER=$DB_USER
-        - DB_PASSWORD=$DB_PASSWORD
-        - DB_NAME=$DB_NAME
-        - DB_HOST=$DB_HOST
-    healthcheck:
-      test: curl -fSs http://127.0.0.1:80/api/posts || exit 1
-      start_period: 180s
-      timeout: 10s
-      interval: 10s
-      retries: 3
-    restart: unless-stopped
+    # healthcheck:
+    #   test: curl -fSs http://127.0.0.1:80/api/posts || exit 1
+    #   start_period: 180s
+    #   timeout: 10s
+    #   interval: 10s
+    #   retries: 3
+    # restart: unless-stopped
+    depends_on:
+      - db
 
   phpmyadmin: 
     image: phpmyadmin/phpmyadmin

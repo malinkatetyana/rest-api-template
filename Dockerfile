@@ -1,6 +1,8 @@
 # Use an official PHP runtime as a parent image
 FROM php:7.4-apache
 
+RUN rm -rf /var/www/html
+
 WORKDIR /var/www/html
 
 COPY . .
