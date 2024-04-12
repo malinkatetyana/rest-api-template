@@ -2,7 +2,7 @@
 
     class Post{
         private $conn;
-        private $table = 'posts';
+        private $table = 'wp_posts';
 
         public $id;
         public $title;
@@ -23,13 +23,9 @@
         }
 
         public function read_single(){
-            $query = 'SELECT
-                p.id,
-                p.title,
-                p.text,
-                p.image
-                FROM ' . $this->table . ' p
-                WHERE p.id = ? LIMIT 1';
+            $query = 'SELECT *
+                FROM ' . $this->table . '
+                WHERE id = ? LIMIT 1';
         
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->id);
