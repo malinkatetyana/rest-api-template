@@ -27,7 +27,7 @@ if ($num > 0) {
             $post_item[$key] = $value;
         }
 
-        if ($post_type == 'post'){
+        if ($post_type == 'page'){
 
         $id = $post_item['ID'];
 
